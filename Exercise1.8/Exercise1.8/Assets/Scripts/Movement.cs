@@ -20,6 +20,8 @@ public class Movement : MonoBehaviour
         Vector2 dir = mover.subtractVectors(mousePos, mover.location);
         mover.acceleration = mover.multiplyVector(dir.normalized, .5f);
         mover.Update();
+        
+
     }
 
 }
@@ -36,18 +38,20 @@ public class Mover_10
 
     // Gives the class a GameObject to draw on the screen
     private GameObject mover = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-
+    
     public Mover_10()
     {
         findWindowLimits();
         location = Vector2.zero; // Vector2.zero is a (0, 0) vector
         velocity = Vector2.zero;
         acceleration = new Vector2(-0.1F, -1F);
-        topSpeed = 2;
+        topSpeed = 10;
 
         //We need to create a new material for WebGL
         Renderer r = mover.GetComponent<Renderer>();
         r.material = new Material(Shader.Find("Diffuse"));
+        Debug.Log(acceleration);
+        Debug.Log(velocity);
     }
 
     public void Update()
@@ -75,33 +79,38 @@ public class Mover_10
             location += velocity * Time.deltaTime;
             mover.transform.position = new Vector3(location.x, location.y, 0);
         }
+        Debug.Log(acceleration);
+        Debug.Log(velocity);
     }
 
     public void CheckEdges()
     {
+       
+
         if (location.x > maximumPos.x)
         {
+            
             location.x -= maximumPos.x - minimumPos.x;
             acceleration = Vector2.zero;
-            velocity = Vector2.zero;
+            //velocity = Vector2.zero;
         }
         else if (location.x < minimumPos.x)
         {
             location.x += maximumPos.x - minimumPos.x;
-            acceleration = Vector2.zero;
-            velocity = Vector2.zero;
+           acceleration = Vector2.zero;
+           // velocity = Vector2.zero;
         }
         if (location.y > maximumPos.y)
         {
             location.y -= maximumPos.y - minimumPos.y;
-            acceleration = Vector2.zero;
-            velocity = Vector2.zero;
+           acceleration = Vector2.zero;
+            //velocity = Vector2.zero;
         }
         else if (location.y < minimumPos.y)
         {
             location.y += maximumPos.y - minimumPos.y;
             acceleration = Vector2.zero;
-            velocity = Vector2.zero;
+           // velocity = Vector2.zero;
         }
     }
 
